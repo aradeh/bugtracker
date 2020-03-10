@@ -48,4 +48,16 @@ router.put('/update/:id',(req,res)=>{
 });
 
 
+//delete
+router.delete('/delete/:id', (req,res)=>{
+    User.destroy({
+        where: {
+            id: req.params.id
+        }
+        })
+        .then(res =>res.redirect('/'))
+        .catch(err => res.send(err))
+});
+
+
 module.exports = router;
