@@ -11,9 +11,30 @@ router.get('/', (req, res) => {
     }).catch(err => console.log(err))
 });
 
+//get bug with id
+router.get('/:id', (req, res) => {
+    Bug.findAll({
+        where : {
+            id : req.params.id 
+        } 
+    })
+    .then(bugs => {
+        console.log(bugs);
+        res.sendStatus(200);
+    }).catch(err => console.log(err))
+});
+
+
 //Post
 router.post('/create', (req,res) => {
-
+    Bug.create()
+    .then(users => {
+        console.log(users.id);
+        res.redirect(`/bugs/${users.id}`);
+        //res.redirect(`/bugs/${users.id}`);
+        //invokeGet(user.id);
+    })
+    .catch(err => console.log(err))
 });
 
 //put
@@ -29,7 +50,9 @@ router.put('/update/:id', (req,res) => {
           userstory: req.body.userstory,
           screenshot: req.body.screenshot  
         },
-        {where: req.params.id}
+        {where: {
+            id :req.params.id
+        }}
     )
     .then(res=>res.redirect('/'))
     .catch(err => res.send(err))

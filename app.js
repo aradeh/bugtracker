@@ -14,7 +14,6 @@ const app = express();
 app.get('/', (req,res) => res.send('-- Landing page of API -- '));
 app.use('/users', require('./routes/users'));
 app.use('/bugs', require('./routes/bugs'));
-app.use('/gigs', require('./routes/gigs'));
 
 const PORT = process.env.PORT || 5000;
 
