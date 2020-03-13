@@ -5,18 +5,27 @@ const Bug = require('../models/Bug');
 
 //Get
 router.get('/', (req, res) => {
-    Bug.findAll().then(bugs => {
-        console.log(bugs);
-        res.sendStatus(200);
+    db.bugs.findAll({
+        include
+    }).then(bugs => {
+        //console.log(bugs);
+        //res.sendStatus(200);
+        res.json(bugs);
     }).catch(err => console.log(err))
 });
 
 //get bug with id
 router.get('/:id', (req, res) => {
-    Bug.findAll({
+    db.bugs.findAll({
         where : {
             id : req.params.id 
-        } 
+        } ,
+        include : [
+            {
+                model: {db.bugs, db}
+                
+            }
+        ]
     })
     .then(bugs => {
         console.log(bugs);
@@ -27,7 +36,7 @@ router.get('/:id', (req, res) => {
 
 //Post
 router.post('/create', (req,res) => {
-    Bug.create()
+    db.bugs.create()
     .then(users => {
         console.log(users.id);
         res.redirect(`/bugs/${users.id}`);
@@ -56,7 +65,6 @@ router.put('/update/:id', (req,res) => {
     )
     .then(res=>res.redirect('/'))
     .catch(err => res.send(err))
-
 });
 
 

@@ -7,8 +7,9 @@ const User = require('../models/User');
 router.get('/', (req,res) => 
     User.findAll()
         .then( users => {
-            console.log(users);
-            res.sendStatus(200);
+            //console.log(users);
+            //res.sendStatus(200);
+            res.json(users);
         })
         .catch( err => {
             res.send(err);

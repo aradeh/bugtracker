@@ -1,41 +1,30 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 
-const Bug = db.define('bug', {
+module.exports = (Sequelize,DataTypes) => {
+
+const Bug = Sequelize.define('bug', {
     title: {
-        type : Sequelize.STRING
+        type : DataTypes.STRING
     },
     description: {
-        type : Sequelize.STRING
+        type : DataTypes.STRING
     },
-    
-    createdBy: {
-        type : Sequelize.STRING
-    },
-    
-    assignedTo: {
-        type : Sequelize.STRING
-    },
-    
-    state: {
-        type : Sequelize.INTEGER
-    }
-    ,
     sprint: {
-        type : Sequelize.STRING
+        type : DataTypes.STRING
     }
     ,
     severity: {
-        type : Sequelize.STRING
+        type : DataTypes.STRING
     }
     ,
     userstory: {
-        type : Sequelize.STRING
+        type : DataTypes.STRING
     }
     ,
     screenshot: {
-        type : Sequelize.JSON
+        type : DataTypes.JSON
     }
 });
-
-module.exports = Bug;
+    return Bug;
+}

@@ -5,7 +5,7 @@ const path = require('path');
 
 const database = require('./config/database');
 //test
-database.authenticate()
+database.sequelize.authenticate()
 .then(() => console.log('Database connected'))
 .catch(err => console.log('Error:' + err));
 
@@ -14,6 +14,8 @@ const app = express();
 app.get('/', (req,res) => res.send('-- Landing page of API -- '));
 app.use('/users', require('./routes/users'));
 app.use('/bugs', require('./routes/bugs'));
+app.use('/states',require('./routes/states'));
+app.use('/comments', require('./routes/comments'));
 
 const PORT = process.env.PORT || 5000;
 
