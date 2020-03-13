@@ -22,12 +22,53 @@ router.get('/:id', (req, res) => {
         } ,
         include : [
             {
-                model: {db.bugs, db}
-                
+                model : db.comments
+                    
+            },
+            {
+                model : db.users
             }
         ]
     })
     .then(bugs => {
+        const resObj = bugs.map(bug => {
+
+            return Object.assign({},{
+                bugId: bug.id,
+                title: bug.title,
+                description: bug.description,
+                state: bug.state,
+                sprint:bug.sprint,
+                severity:bug.severity,
+                userstory: bug.userstory,
+                createdAt:bug.createdBy,
+                updatedAt: bug.updatedAt,
+                comments: bug.comments.map(comment =>{
+                    return Object.assign({},{
+                        commentId: comment.id,
+                        commentText: comment.commentText,
+                        updatedAt: comment.updatedAt,
+                        user: comment.user.map(user => {
+                            return Object.assign({},{
+                                userId : user.id,
+                                firstName: user.firstName,
+                                lastName: user.lastName
+                            })
+                        })
+                    })
+                }),
+                user: bug.users.map(user=> {
+                    return Object.assign({},{
+                        //return user 
+                    })
+                })
+
+            })
+        });
+
+
+
+
         console.log(bugs);
         res.sendStatus(200);
     }).catch(err => console.log(err))
